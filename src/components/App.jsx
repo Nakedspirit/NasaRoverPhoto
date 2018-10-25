@@ -8,11 +8,17 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import { Header } from '../components/Header';
-import RoversPage from '../components/RoversPage';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 
 import RoverPage from '../components/RoverPage';
-import rovers from '../state/rovers.reducer';
+import RoversPage from '../components/RoversPage';
+
+import rovers from '../state/reducers';
+import { loadAllManifests } from '../state/actions.manifests';
+import {
+  manifestsReducer as manifests,
+  photosReducer as photos
+} from '../state/reducers';
 
 const theme = createMuiTheme({
   palette: {
@@ -46,11 +52,16 @@ const styles = theme => ({
 const store = createStore(
   combineReducers({
     rovers,
+    manifests,
+    photos
   }),
   applyMiddleware(thunk)
 );
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadAllManifests());
+  }
 
   render() {
     return (
@@ -59,7 +70,7 @@ class App extends Component {
           <MuiThemeProvider theme={theme}>
             <div className={this.props.classes.root}>
               <Header/>
-              <Route path='/rovers/:key' component={RoverPage}/>
+              <Route path='/rovers/:key' component={RoverPage} render={ (props) => <RoverPage {...props} /> }/>
               <Route exact={true} path='/' render={ (props) => <RoversPage {...props} /> }/>
             </div>
           </MuiThemeProvider>

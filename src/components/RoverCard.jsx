@@ -4,7 +4,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RoverManifest from './RoverManifest';
 
@@ -34,7 +33,7 @@ const styles = theme => ({
   }
 });
 
-const RoverCard = ({classes, name, manifest }) => {
+const RoverCard = ({classes, name}) => {
   const images = {
     Spirit,
     Opportunity,
@@ -62,12 +61,6 @@ const RoverCard = ({classes, name, manifest }) => {
     <br/>
     </Link>
   );
-};
-
-RoverCard.propTypes = {
-  classes: PropTypes.object,
-  name: PropTypes.string,
-  manifest: PropTypes.object
 };
 
 export default withStyles(styles)(RoverCard);

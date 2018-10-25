@@ -2,34 +2,29 @@ import React, { Component } from 'react';
 import { roverNames } from '../constants';
 import { connect } from 'react-redux';
 import NotFound from './404';
-import PhotoGrid from './PhotoGrid';
-
-import * as actions from '../state/rovers.actions';
+import PhotoSearch from './PhotoSearch';
 
 class RoverPage extends Component {
-  componentWillMount(){
-    let { match: {params: {key} }, fetchPhoto} = this.props;
-    let date = 100;
-    fetchPhoto(key, date);
-  }
   
   render() {
-    let { match: {params: {key} }, rovers: { [key]: rover = {} } } = this.props;
+    
+    let { match: {params: {key} } } = this.props;
 
     if (!roverNames[key]) return <NotFound />
 
-    let { photos } = rover;
-
-    if (null == photos) {
-      return null;
-    }
+    let { manifests } = this.props;
+    let manifest = manifests[key];
 
     return (
       <div>
-        <PhotoGrid photos={ photos } />
+        <PhotoSearch key={key} rover={key} manifest={manifest} />
       </div>
     );
   } 
 }
 
-export default connect(({ rovers }) => ({ rovers }), actions)(RoverPage);
+const mapStateToProps = (state, ownProps) => ({
+  manifests: state.manifests
+});
+
+export default connect(mapStateToProps)(RoverPage);

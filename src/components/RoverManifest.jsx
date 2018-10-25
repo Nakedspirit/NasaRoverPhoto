@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../state/rovers.actions';
-
+import * as actions from '../state/actions.manifests';
+import {Utils} from '../utils';
 
 const capitalize = (word = '') => {
   let splitWord = word.split('');
@@ -10,12 +10,10 @@ const capitalize = (word = '') => {
   return splitWord.join('');
 };
 
-const formatDate = date => new Date(date).toDateString()
-
 class RoverManifest extends Component {
+
   componentDidMount() {
     let { rover: key, fetchManifest } = this.props;
-    console.log('fetch ' + key);
     fetchManifest(key);
   }
 
@@ -29,10 +27,10 @@ class RoverManifest extends Component {
     return (
       <div>  
           <h2>Mission Manifest</h2><br/>
-          <b>Launch Date:</b> {formatDate(manifest.launch_date)}<br/>
-          <b>Landing Date:</b> {formatDate(manifest.landing_date)}<br/>
+          <b>Launch Date:</b> {Utils.formatDate(manifest.launch_date)}<br/>
+          <b>Landing Date:</b> {Utils.formatDate(manifest.landing_date)}<br/>
           <b>Days on Mars:</b> {manifest.max_sol}<br/>
-          <b>Last Photo Taken On:</b> {formatDate(manifest.max_date)}<br/>
+          <b>Last Photo Taken On:</b> {Utils.formatDate(manifest.max_date)}<br/>
           <b>Rover Status:</b> {capitalize(manifest.status)}
       </div>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -19,14 +18,14 @@ class RoversPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rover: roverNames
+      rover: roverNames,
     };
   }
-
 
   render() {
   let { classes } = this.props;
   let rover = this.state.rover;
+
   return (
     <div className={classes.tabs}>
       {Object.values(rover).map((props) => <RoverCard {...props} />)}
@@ -35,14 +34,5 @@ class RoversPage extends React.Component {
   }
 }
 
-RoversPage.PropTypes = {
-  classes: PropTypes.object,
-  rover: PropTypes.arrayOf(PropTypes.object)
-};
-
-const mapStateToProps = (state, ownProps) => ({
-
-});
-
-const connectedPage = connect(mapStateToProps)(RoversPage);
+const connectedPage = connect(({ rovers }) => ({ rovers }))(RoversPage);
 export default withStyles(styles, { withTheme: true })(connectedPage);

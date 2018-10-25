@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {Utils} from '../utils';
 
 import ShareButton from 'react-social-share-buttons'
 
@@ -19,15 +20,8 @@ const styles = {
   }
 };
 
-const formatDate = date => new Date(date).toDateString()
-
 class PhotoDialog extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-
+  
   render() {
     const { classes, photo, onClose, ...other } = this.props;
 
@@ -38,7 +32,7 @@ class PhotoDialog extends React.Component {
             <div>
                 <img src={photo.img_src} alt={''} style={styles.img}/>
                 <b>Camera:</b> {photo.camera.full_name}<br/>
-                <b>Sol/Earth Date:</b> {photo.sol}/{formatDate(photo.earth_date)}<br/>
+                <b>Sol/Earth Date:</b> {photo.sol}/{Utils.formatDate(photo.earth_date)}<br/>
             </div>
             <Button
                 className={classes.close}
@@ -56,11 +50,6 @@ class PhotoDialog extends React.Component {
                 text="Mars photo"
             />
         </DialogTitle>
-        {/* <div>
-            <b>Camera:</b> {photo.camera.full_name}<br/>
-            <b>Sol/Earth Date:</b> {photo.sol}/{formatDate(photo.earth_date)}<br/>
-            <img src={photo.img_src} alt={''} style={styles.img}/>
-        </div> */}
       </Dialog>
     );
   }
